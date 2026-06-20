@@ -1,91 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Anniversary! ❤️</title>
-    <style>
-        body { background-color: #fff5f5; color: #4a1525; font-family: 'Georgia', serif; text-align: center; padding: 40px 20px; margin: 0; min-height: 100vh; box-sizing: border-box; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; }
-        h1 { color: #d63384; font-size: 26px; margin-bottom: 10px; }
-        p { font-size: 18px; line-height: 1.6; color: #6c757d; }
-        .heart { font-size: 50px; color: #e63946; margin: 20px 0; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Happy Anniversary! ❤️</title> 
+    <style> 
+        body { background-color: #fff5f5; color: #4a1525; font-family: 'Georgia', serif; text-align: center; padding: 40px 20px; margin: 0; min-height: 100vh; box-sizing: border-box; } 
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; } 
+        h1 { color: #d63384; font-size: 26px; margin-bottom: 10px; } 
+        p { font-size: 18px; line-height: 1.6; color: #6c757d; } 
+        .heart { font-size: 50px; color: #e63946; margin: 20px 0; animation: pulse 1.5s infinite; } 
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } } 
         
-        /* The trick button style */
-        .btn { 
-            background: #d63384; color: white; padding: 15px 35px; font-size: 18px; font-weight: bold; 
-            border: none; border-radius: 25px; cursor: pointer; text-decoration: none; 
-            display: inline-block; transition: background 0.2s; position: relative; z-index: 10;
-        }
-        .btn:hover { background: #b8236c; }
+        /* The trick button style */ 
+        .btn { background: #d63384; color: white; padding: 15px 35px; font-size: 18px; font-weight: bold; border: none; border-radius: 25px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; position: relative; z-index: 10; } 
+        .btn:hover { background: #b8236c; } 
         
-        #prank-zone { display: none; margin-top: 20px; }
-        iframe { width: 100%; max-width: 560px; height: 315px; border: none; border-radius: 10px; margin-top: 15px; }
-    </style>
-</head>
-<body>
-    <div class="container" id="main-container">
-        <!-- FIRST SCREEN -->
-        <div id="setup-zone">
-            <div class="heart">❤️</div>
-            <h1>E Link open cheyyandi!</h1>
-            <p>Make sure your sound is turned up!</p>
-            <!-- Added triggers for both computer mouse (mouseover) and mobile touch (touchstart) -->
-            <button class="btn" id="runaway-btn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="revealPrank()">Open Link</button>
-        </div>
+        #prank-zone { display: none; margin-top: 20px; } 
+        
+        /* Fixed video layout style */
+        video { width: 100%; max-width: 560px; height: auto; border-radius: 10px; margin-top: 15px; background: black; } 
 
-        <!-- THE PUNCHLINE -->
-        <div id="prank-zone">
-            <h1>Em undhi, Em ledhu Ikkada </h1>
-            <p>Hehehe! Chala kasta paddaru kaani, nen em cheyledhu. So idantha Fakeuu😁</p>
-            <iframe id="video" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <script>
-        let escapeCount = 0;
-        const maxEscapes = 4; // Number of times the button runs away before allowing a click
-
-        function moveButton() {
-            if (escapeCount >= maxEscapes) {
-                return; // Stop running away so they can finally click it
-            }
-
-            const btn = document.getElementById('runaway-btn');
-            
-            // Switch button to absolute positioning relative to the screen width/height
-            btn.style.position = 'fixed';
-            
-            // Calculate random coordinates away from the edges
-            const randomX = Math.random() * (window.innerWidth - btn.offsetWidth - 40) + 20;
-            const randomY = Math.random() * (window.innerHeight - btn.offsetHeight - 40) + 20;
-            
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
-            
-            escapeCount++;
+        /* Message styling after video ends */
+        #end-message {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff0f3;
+            border: 2px dashed #d63384;
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out;
         }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style> 
+</head> 
+<body> 
+    <div class="container" id="main-container"> 
+        <!-- FIRST SCREEN --> 
+        <div id="setup-zone"> 
+            <div class="heart">❤️</div> 
+            <h1>E Link open cheyyandi!</h1> 
+            <p>Make sure your sound is turned up!</p> 
+            <button class="btn" id="runaway-btn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="revealPrank()">Open Link</button> 
+        </div> 
 
-        function revealPrank() {
-            // Safety check: if they somehow click it before maxEscapes, force them to chase it
-            if (escapeCount < maxEscapes) {
-                moveButton();
-                return;
-            }
-
-            // Put the button back in normal flow and hide the setup screen
-            const btn = document.getElementById('runaway-btn');
-            btn.style.position = 'relative';
-            btn.style.left = '0';
-            btn.style.top = '0';
-
-            document.getElementById('setup-zone').style.display = 'none';
-            document.getElementById('prank-zone').style.display = 'block';
+        <!-- THE PUNCHLINE --> 
+        <div id="prank-zone"> 
+            <h1>Em undhi, Em ledhu Ikkada </h1> 
+            <p>Hehehe! Chala kasta paddaru kaani, nen em cheyledhu. So idantha Fakeuu😁</p> 
             
-            // Embeds the Rickroll video (Swap dQw4w9WgXcQ with your video ID if desired)
-            document.getElementById('video').src = "https://youtube.com";
-        }
-    </script>
-</body>
+            <!-- Swapped iframe for a native video player -->
+            <video id="custom-video" controls playsinline></video>
+
+            <!-- THE FINAL MESSAGE (Hidden until video ends) -->
+            <div id="end-message">
+                <h2>Happy Anniversary! Real surprise is waiting for you! ❤️</h2>
+                <p>Nijamga chala love chesthunna. Design and text antha simple ga trick cheyadanike petta!</p>
+            </div>
+        </div> 
+    </div> 
+
+    <script> 
+        let escapeCount = 0; 
+        const maxEscapes = 4; 
+
+        function moveButton() { 
+            if (escapeCount >= maxEscapes) { return; } 
+            const btn = document.getElementById('runaway-btn'); 
+            btn.style.position = 'fixed'; 
+            const randomX = Math.random() * (window.innerWidth - btn.offsetWidth - 40) + 20; 
+            const randomY = Math.random() * (window.innerHeight - btn.offsetHeight - 40) + 20; 
+            btn.style.left = randomX + 'px'; 
+            btn.style.top = randomY + 'px'; 
+            escapeCount++; 
+        } 
+
+        function revealPrank() { 
+            if (escapeCount < maxEscapes) { 
+                moveButton(); 
+                return; 
+            } 
+            const btn = document.getElementById('runaway-btn'); 
+            btn.style.position = 'relative'; 
+            btn.style.left = '0'; 
+            btn.style.top = '0'; 
+            document.getElementById('setup-zone').style.display = 'none'; 
+            document.getElementById('prank-zone').style.display = 'block'; 
+            
+            const videoElement = document.getElementById('custom-video');
+            
+            // ⚠️ CHANGE THIS NAME TO MATCH YOUR UPLOADED FILE EXACTLY ⚠️
+            videoElement.src = "prank.mp4"; 
+            
+            videoElement.play().catch(error => { 
+                console.log("Autoplay blocked. User can click play manually."); 
+            }); 
+
+            // Trigger message display the exact second the video completes
+            videoElement.addEventListener('ended', function() {
+                document.getElementById('end-message').style.display = 'block';
+                document.getElementById('end-message').scrollIntoView({ behavior: 'smooth' });
+            });
+        } 
+    </script> 
+</body> 
 </html>
