@@ -5,44 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Anniversary! ❤️</title>
     <style>
-        body { background-color: #fff5f5; color: #4a1525; font-family: 'Georgia', serif; text-align: center; padding: 40px 20px; margin: 0; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        body { background-color: #fff5f5; color: #4a1525; font-family: 'Georgia', serif; text-align: center; padding: 40px 20px; margin: 0; min-height: 100vh; box-sizing: border-box; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; }
         h1 { color: #d63384; font-size: 26px; margin-bottom: 10px; }
         p { font-size: 18px; line-height: 1.6; color: #6c757d; }
         .heart { font-size: 50px; color: #e63946; margin: 20px 0; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        .btn { background: #d63384; color: white; padding: 15px 35px; font-size: 18px; font-weight: bold; border: none; border-radius: 25px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+        
+        /* The trick button style */
+        .btn { 
+            background: #d63384; color: white; padding: 15px 35px; font-size: 18px; font-weight: bold; 
+            border: none; border-radius: 25px; cursor: pointer; text-decoration: none; 
+            display: inline-block; transition: background 0.2s; position: relative; z-index: 10;
+        }
         .btn:hover { background: #b8236c; }
+        
         #prank-zone { display: none; margin-top: 20px; }
         iframe { width: 100%; max-width: 560px; height: 315px; border: none; border-radius: 10px; margin-top: 15px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- WHAT THEY SEE FIRST -->
+    <div class="container" id="main-container">
+        <!-- FIRST SCREEN -->
         <div id="setup-zone">
             <div class="heart">❤️</div>
             <h1>Your Anniversary Surprise is Ready!</h1>
             <p>I put together something incredibly special to celebrate our time together. Make sure your sound is turned up!</p>
-            <button class="btn" onclick="revealPrank()">🎁 UNLOCK SURPRISE</button>
+            <!-- Added triggers for both computer mouse (mouseover) and mobile touch (touchstart) -->
+            <button class="btn" id="runaway-btn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="revealPrank()">🎁 UNLOCK SURPRISE</button>
         </div>
 
         <!-- THE PUNCHLINE -->
         <div id="prank-zone">
             <h1>🎉 GOTCHA! 🎉</h1>
             <p>You didn't actually think it would be that easy, did you? Happy Anniversary!</p>
-            <!-- Embeds the video and sets it to autoplay once clicked -->
             <iframe id="video" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
+        let escapeCount = 0;
+        const maxEscapes = 4; // Number of times the button runs away before allowing a click
+
+        function moveButton() {
+            if (escapeCount >= maxEscapes) {
+                return; // Stop running away so they can finally click it
+            }
+
+            const btn = document.getElementById('runaway-btn');
+            
+            // Switch button to absolute positioning relative to the screen width/height
+            btn.style.position = 'fixed';
+            
+            // Calculate random coordinates away from the edges
+            const randomX = Math.random() * (window.innerWidth - btn.offsetWidth - 40) + 20;
+            const randomY = Math.random() * (window.innerHeight - btn.offsetHeight - 40) + 20;
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            
+            escapeCount++;
+        }
+
         function revealPrank() {
+            // Safety check: if they somehow click it before maxEscapes, force them to chase it
+            if (escapeCount < maxEscapes) {
+                moveButton();
+                return;
+            }
+
+            // Put the button back in normal flow and hide the setup screen
+            const btn = document.getElementById('runaway-btn');
+            btn.style.position = 'relative';
+            btn.style.left = '0';
+            btn.style.top = '0';
+
             document.getElementById('setup-zone').style.display = 'none';
             document.getElementById('prank-zone').style.display = 'block';
             
-            // CURRENT VIDEO: Classic Rickroll. 
-            // To change it, swap 'dQw4w9WgXcQ' with any other YouTube video ID!
+            // Embeds the Rickroll video (Swap dQw4w9WgXcQ with your video ID if desired)
             document.getElementById('video').src = "https://youtube.com";
         }
     </script>
