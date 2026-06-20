@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urgent Alert!</title>
+    <title>Happy Anniversary! ❤️</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 40px 20px; margin: 0; }
-        .container { max-width: 500px; margin: auto; }
-        h1 { color: #ff3333; font-size: 28px; }
-        p { font-size: 18px; margin-bottom: 30px; }
-        .btn { background: #ff3333; color: white; padding: 15px 30px; font-size: 20px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
+        body { background-color: #fff5f5; color: #4a1525; font-family: 'Georgia', serif; text-align: center; padding: 40px 20px; margin: 0; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #d63384; font-size: 26px; margin-bottom: 10px; }
+        p { font-size: 18px; line-height: 1.6; color: #6c757d; }
+        .heart { font-size: 50px; color: #e63946; margin: 20px 0; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .btn { background: #d63384; color: white; padding: 15px 35px; font-size: 18px; font-weight: bold; border: none; border-radius: 25px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+        .btn:hover { background: #b8236c; }
         #prank-zone { display: none; margin-top: 20px; }
-        iframe { width: 100%; max-width: 560px; height: 315px; border: none; }
+        iframe { width: 100%; max-width: 560px; height: 315px; border: none; border-radius: 10px; margin-top: 15px; }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- WHAT THEY SEE FIRST -->
         <div id="setup-zone">
-            <h1>⚠️ SECURITY BREACH DETECTED</h1>
-            <p>Your device's camera has been accessed by an unauthorized third party. Click below to view the active stream and secure your connection.</p>
-            <button class="btn" onclick="revealPrank()">VIEW LIVE STREAM</button>
+            <div class="heart">❤️</div>
+            <h1>Your Anniversary Surprise is Ready!</h1>
+            <p>I put together something incredibly special to celebrate our time together. Make sure your sound is turned up!</p>
+            <button class="btn" onclick="revealPrank()">🎁 UNLOCK SURPRISE</button>
         </div>
 
+        <!-- THE PUNCHLINE -->
         <div id="prank-zone">
             <h1>🎉 GOTCHA! 🎉</h1>
-            <p>Relax, it's just a prank!</p>
-            <!-- Replace this URL with any YouTube video link you want -->
+            <p>You didn't actually think it would be that easy, did you? Happy Anniversary!</p>
+            <!-- Embeds the video and sets it to autoplay once clicked -->
             <iframe id="video" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
@@ -34,8 +40,9 @@
         function revealPrank() {
             document.getElementById('setup-zone').style.display = 'none';
             document.getElementById('prank-zone').style.display = 'block';
-            // Edits the video source to autoplay your prank video
-            // Tip: Replace the ID below (dQw4w9WgXcQ) with your chosen YouTube video ID
+            
+            // CURRENT VIDEO: Classic Rickroll. 
+            // To change it, swap 'dQw4w9WgXcQ' with any other YouTube video ID!
             document.getElementById('video').src = "https://youtube.com";
         }
     </script>
